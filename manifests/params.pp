@@ -17,6 +17,7 @@ class sendmail::params {
   ### Application related parameters
 
   $package = $::operatingsystem ? {
+    /(?i:Centos|RedHat|Scientific)/ => [ 'sendmail' , 'snedmail-cf' ],
     default => 'sendmail',
   }
 
@@ -41,11 +42,11 @@ class sendmail::params {
   }
 
   $config_dir = $::operatingsystem ? {
-    default => '/etc/sendmail',
+    default => '/etc/mail',
   }
 
   $config_file = $::operatingsystem ? {
-    default => '/etc/sendmail/sendmail.conf',
+    default => '/etc/mail/sendmail.mc',
   }
 
   $config_file_mode = $::operatingsystem ? {
@@ -70,18 +71,19 @@ class sendmail::params {
   }
 
   $data_dir = $::operatingsystem ? {
-    default => '/etc/sendmail',
+    default => '/var/spool/mail',
   }
 
   $log_dir = $::operatingsystem ? {
-    default => '/var/log/sendmail',
+    default => '',
   }
 
   $log_file = $::operatingsystem ? {
-    default => '/var/log/sendmail/sendmail.log',
+    /(?i:Debian|Ubuntu|Mint)/ => '/var/log/mail.log',
+    default => '/var/log/maillog',
   }
 
-  $port = '42'
+  $port = '25'
   $protocol = 'tcp'
 
   # General Settings
