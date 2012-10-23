@@ -284,7 +284,7 @@ class sendmail (
   }
 
   $manage_service_autorestart = $sendmail::bool_service_autorestart ? {
-    true    => Service[sendmail],
+    true    => Exec[sendmail_make_config],
     false   => undef,
   }
 
@@ -331,6 +331,13 @@ class sendmail (
   ### Managed resources
   package { $sendmail::package:
     ensure => $sendmail::manage_package,
+  }
+
+  exec { 'sendmail_make_config':
+    command     => "make -C ${sendmail::config_dir}",
+    refreshonly => true,
+    path        => '/usr/bin:/usr/sbin:/bin:/sbin',
+    notify      => Service['sendmail'],
   }
 
   service { 'sendmail':
