@@ -17,6 +17,7 @@ class sendmail::params {
   ### Application related parameters
 
   $package = $::operatingsystem ? {
+    /(?i:Debian|Ubuntu|Mint)/       => 'sendmail-bin',
     /(?i:Centos|RedHat|Scientific)/ => [ 'sendmail' , 'sendmail-cf' ],
     default => 'sendmail',
   }
