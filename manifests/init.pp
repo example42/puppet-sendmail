@@ -364,7 +364,7 @@ class sendmail (
   }
 
   # The whole sendmail configuration directory can be recursively overriden
-  if $sendmail::source_dir {
+  if $sendmail::source_dir != '' {
     file { 'sendmail.dir':
       ensure  => directory,
       path    => $sendmail::config_dir,
@@ -380,7 +380,7 @@ class sendmail (
 
 
   ### Include custom class if $my_class is set
-  if $sendmail::my_class {
+  if $sendmail::my_class != "" {
     include $sendmail::my_class
   }
 
